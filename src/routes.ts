@@ -1,4 +1,5 @@
 import { Router, type Request, type Response, type NextFunction } from 'express';
+import HttpError from "./classes/HttpError";
 
 const router = Router();
 
@@ -8,15 +9,6 @@ router.get('/health', (req: Request, res: Response) => {
     res.json({status: 'ok'});
 });
 
-class HttpError extends Error {
-    public status: number;
-
-    constructor(status: number, message: string) {
-        super(message);
-        this.name = 'HttpError';
-        this.status = status;
-    }
-}
 
 router.get('/error', () => {
     throw new HttpError(501, 'Custom Error');
