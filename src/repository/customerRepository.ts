@@ -41,7 +41,7 @@ export const customerEmailExists = async (email: string): Promise<boolean> => {
     }
 }
 
-export const customerEmailPhone = async (phone: string): Promise<boolean> => {
+export const customerPhoneExists = async (phone: string): Promise<boolean> => {
     try {
         const result = await pool.query<{ exists: boolean }>(
             'SELECT EXISTS (SELECT 1 FROM customers WHERE phone = $1)',
