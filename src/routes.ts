@@ -1,5 +1,5 @@
 import { Router, type Request, type Response, type NextFunction } from 'express';
-import HttpError from "./classes/HttpError";
+import HttpError from "./classes/HttpError.ts";
 
 const router = Router();
 
