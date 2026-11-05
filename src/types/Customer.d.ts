@@ -1,9 +1,9 @@
 interface Customer {
     id: number;
     name: string;
-    email: string | null;
-    phone: string | null;
-    address: string | null;
+    email: string;
+    phone: string;
+    address: string;
     created_at: Date;
 }
 

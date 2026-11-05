@@ -32,6 +32,21 @@ const schema = `
   CREATE INDEX IF NOT EXISTS idx_jobs_customer_id   ON jobs (customer_id);
   CREATE INDEX IF NOT EXISTS idx_jobs_technician_id ON jobs (technician_id);
   CREATE INDEX IF NOT EXISTS idx_jobs_status        ON jobs (status);
+  
+  ALTER TABLE customers
+    ALTER COLUMN email SET NOT NULL,
+    ALTER COLUMN address SET NOT NULL,
+    ALTER COLUMN phone SET NOT NULL;
+    
+  ALTER TABLE technicians
+    ALTER COLUMN email SET NOT NULL,
+    ALTER COLUMN phone SET NOT NULL;
+    
+  CREATE UNIQUE INDEX IF NOT EXISTS customers_phone_key ON customers (phone);
+  CREATE UNIQUE INDEX IF NOT EXISTS customers_email_key ON customers (email);
+  
+  CREATE UNIQUE INDEX IF NOT EXISTS technicians_phone_key ON technicians (phone);
+  CREATE UNIQUE INDEX IF NOT EXISTS technicians_email_key ON technicians (email);
 `;
 
 export default schema;
