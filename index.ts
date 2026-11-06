@@ -33,6 +33,22 @@ try {
     process.exit(1);
 }
 
+// ERROR HANDLER
+interface UnknownError extends Error {
+    status?: number;
+    code?: string;
+}
+
+app.use((err: UnknownError, req: Request, res: Response, next: NextFunction) => {
+    // handled error
+    if (err.status) {
+        res.status(err.status).json({name: err.name, code: err.code})
+        return;
+    }
+    console.error(err);
+    res.status(500).json({error: err.message || 'Internal Server Error'});
+});
+
 // LISTEN
 app.listen(PORT, () => {
     console.log(`Server running on http://localhost:${PORT}`);

@@ -35,21 +35,4 @@ router.post('/register', (req: Request<{}, {}, RegisterBody>, res: Response) => 
     res.status(201).json({user: {username, password: randomStr}});
 });
 
-
-// ERROR HANDLER
-interface UnknownError extends Error {
-    status?: number;
-    code?: string;
-}
-
-router.use((err: UnknownError, req: Request, res: Response, next: NextFunction) => {
-    // handled error
-    if (err.status) {
-        res.status(err.status).json({name: err.name, code: err.code})
-        return;
-    }
-    console.error(err);
-    res.status(500).json({error: err.message || 'Internal Server Error'});
-});
-
 export default router;

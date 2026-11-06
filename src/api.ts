@@ -6,6 +6,7 @@ const router = Router();
 
 
 router.post('/customer/create', async (req: Request, res: Response) => {
+    // skipping customer validations, not relevant for the project
     const customer = await customerService.createCustomer(req.body);
     res.status(201).json(customer);
 });
