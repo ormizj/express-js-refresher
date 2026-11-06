@@ -1,6 +1,6 @@
 import * as customerRepo from '../repository/customerRepository.ts';
-import CustomerEmailExistsException from "../exceptions/CustomerEmailExistsException.ts";
-import CustomerPhoneExistsException from "../exceptions/CustomerPhoneExistsException.ts";
+import CustomerEmailExistsException from "../exceptions/customer/CustomerEmailExistsException.ts";
+import CustomerPhoneExistsException from "../exceptions/customer/CustomerPhoneExistsException.ts";
 
 export const createCustomer = async (customer: NewCustomer) => {
     if (await customerRepo.customerEmailExists(customer.email)) {
