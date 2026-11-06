@@ -3,10 +3,10 @@ import pool from "../database/pool.ts";
 export const createJob = async (job: NewJob): Promise<Job> => {
     try {
         const result = await pool.query<Job>(
-            `INSERT INTO jobs (customer_id, technician_id, title, description, status, scheduled_at)
-            VALUES ($1, $2, $3, $4, COALESCE($5, 'pending'), $6)
+            `INSERT INTO jobs (customer_id, technician_id, title, description, status, start_time, end_time)
+            VALUES ($1, $2, $3, $4, COALESCE($5, 'pending'), $6, $7)
             RETURNING *`,
-            [job.customer_id, job.technician_id, job.title, job.description, job.status, job.scheduled_at],
+            [job.customer_id, job.technician_id, job.title, job.description, job.status, job.start_time, job.end_time],
         );
         return result.rows[0];
     } catch (e) {

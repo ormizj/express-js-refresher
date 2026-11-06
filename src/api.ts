@@ -1,7 +1,7 @@
 import {Router, type Request, type Response} from "express";
 import * as customerService from './services/customerService.ts';
 import * as technicianService from './services/technicianService.ts';
-import EntityException from "./exceptions/EntityException.ts";
+import * as jobService from './services/jobService.ts';
 
 const router = Router();
 
@@ -18,8 +18,10 @@ router.post('/technician/create', async (req: Request, res: Response) => {
     res.status(201).json(technician);
 });
 
-router.post('/jobs/book', (req: Request, res: Response) => {
-
+router.post('/jobs/book', async (req: Request, res: Response) => {
+    // skipping job validations, not relevant for the project
+    const job = await jobService.createJob(req.body);
+    res.status(201).json(job);
 });
 
 

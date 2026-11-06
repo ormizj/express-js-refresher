@@ -1,4 +1,4 @@
-type JobStatus = 'pending'| 'scheduled'| 'in_progress'| 'completed'| 'cancelled';
+type JobStatus = 'pending' | 'scheduled' | 'in_progress' | 'completed' | 'cancelled';
 
 interface Job {
     id: number;
@@ -7,7 +7,8 @@ interface Job {
     title: string;
     description: string | null;
     status: JobStatus;
-    scheduled_at: Date | null;
+    start_time: Date | null;
+    end_time: Date | null;
     created_at: Date;
 }
 
