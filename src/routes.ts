@@ -1,5 +1,5 @@
-import { Router, type Request, type Response, type NextFunction } from 'express';
-import HttpError from "./classes/HttpError.ts";
+import {Router, type Request, type Response, type NextFunction} from 'express';
+import HttpError from "./exceptions/HttpError.ts";
 
 const router = Router();
 
@@ -11,7 +11,7 @@ router.get('/health', (req: Request, res: Response) => {
 
 
 router.get('/error', () => {
-    throw new HttpError(501, 'Custom Error');
+    throw new HttpError('Custom Error', 501);
 });
 
 
