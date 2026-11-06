@@ -6,12 +6,8 @@ const router = Router();
 
 
 router.post('/customer/create', async (req: Request, res: Response) => {
-    try {
-        const customer = await customerService.createCustomer(req.body);
-        res.status(201).json(customer);
-    } catch (e) {
-        
-    }
+    const customer = await customerService.createCustomer(req.body);
+    res.status(201).json(customer);
 });
 
 router.post('/jobs/book', (req: Request, res: Response) => {
