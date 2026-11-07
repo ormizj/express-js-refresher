@@ -2,6 +2,9 @@
   exceptions and pass them through the client if needed, making the service exceptions decoupled\
 - No model validations, instead of validating through a class validator with zod, skipping it, as its not the most
   relevant for this project
+- No end time before start time check, it's request validation that would belong with the skipped model validations
+  above, the client is trusted to send a valid time range, not relevant for the project, only preformed validations
+  which is relevant for our BL, in this project, and not user errors
 - No authentication, skipping JWT with token saving into the database (would implement by registering a user, and when
   he logs in save the token so the user can login in the future with the same token and authenticate with it), not
   relevant for the project
