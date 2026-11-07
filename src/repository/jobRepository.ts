@@ -15,65 +15,19 @@ export const createJob = async (job: NewJob): Promise<Job> => {
     }
 }
 
-export const getJob = async (id: number): Promise<Job> => {
+export const isJobExistsBetween = async (technicianId: number, startTime: Date, endTime: Date) => {
     try {
-        const result = await pool.query<Job>(
-            'SELECT * FROM jobs WHERE id = $1',
-            [id]
+        const result = await pool.query<{ exists: boolean }>(
+            `SELECT EXISTS (
+                SELECT FROM jobs
+                WHERE technician_id = $1
+                AND status <> 'cancelled'
+                AND start_time < $3
+                AND end_time > $2
+            );`,
+            [technicianId, startTime, endTime],
         );
-        return result.rows[0];
-    } catch (e) {
-        console.error(e);
-        throw e;
-    }
-}
-
-export const getJobsByCustomer = async (customerId: number): Promise<Job[]> => {
-    try {
-        const result = await pool.query<Job>(
-            'SELECT * FROM jobs WHERE customer_id = $1 ORDER BY created_at DESC',
-            [customerId]
-        );
-        return result.rows;
-    } catch (e) {
-        console.error(e);
-        throw e;
-    }
-}
-
-export const getJobsByTechnician = async (technicianId: number): Promise<Job[]> => {
-    try {
-        const result = await pool.query<Job>(
-            'SELECT * FROM jobs WHERE technician_id = $1 ORDER BY scheduled_at',
-            [technicianId]
-        );
-        return result.rows;
-    } catch (e) {
-        console.error(e);
-        throw e;
-    }
-}
-
-export const assignTechnician = async (jobId: number, technicianId: number | null): Promise<Job> => {
-    try {
-        const result = await pool.query<Job>(
-            'UPDATE jobs SET technician_id = $2 WHERE id = $1 RETURNING *',
-            [jobId, technicianId]
-        );
-        return result.rows[0];
-    } catch (e) {
-        console.error(e);
-        throw e;
-    }
-}
-
-export const updateJobStatus = async (jobId: number, status: JobStatus): Promise<Job> => {
-    try {
-        const result = await pool.query<Job>(
-            'UPDATE jobs SET status = $2 WHERE id = $1 RETURNING *',
-            [jobId, status]
-        );
-        return result.rows[0];
+        return result.rows[0].exists;
     } catch (e) {
         console.error(e);
         throw e;

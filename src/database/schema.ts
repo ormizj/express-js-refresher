@@ -49,9 +49,9 @@ const schema = `
   CREATE UNIQUE INDEX IF NOT EXISTS technicians_email_key ON technicians (email);
   
   ALTER TABLE jobs
-    DROP COLUMN scheduled_at,
-    ADD COLUMN start_time TIMESTAMPTZ NOT NULL,
-    ADD COLUMN end_time TIMESTAMPTZ NOT NULL;
+    DROP COLUMN IF EXISTS scheduled_at,
+    ADD COLUMN IF NOT EXISTS start_time TIMESTAMPTZ NOT NULL,
+    ADD COLUMN IF NOT EXISTS end_time TIMESTAMPTZ NOT NULL;
 `;
 
 export default schema;
